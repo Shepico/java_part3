@@ -1,10 +1,10 @@
 package lesson1.taskFruit;
 
-public class Fruit {
+public class Fruit<T> {
     private String sort;
     private double weight;
 
-    Fruit (String sort, int weight){
+    Fruit (String sort, double weight){
         this.sort = sort;
         this.weight = weight;
     }

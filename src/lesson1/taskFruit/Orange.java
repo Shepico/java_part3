@@ -2,7 +2,7 @@ package lesson1.taskFruit;
 
 public class Orange extends Fruit {
 
-    Orange (String sort, int weight) {
-        super(sort, weight);
+    Orange (String sort) {
+        super(sort, 1.5);
     }
 }

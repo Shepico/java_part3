@@ -1,0 +1,143 @@
+//Первый 2 задания
+package lesson1;
+
+import java.util.ArrayList;
+
+ class ArrayElement <T> {
+    private T[] obj;
+    private ArrayList<T> al;
+
+    ArrayElement(T[] obj) {
+        this.obj = obj;
+    }
+
+    void changeElement(int indexOne, int indexTwo){
+        T elem = this.obj[indexOne];
+        this.obj[indexOne] = this.obj[indexTwo];
+        this.obj[indexTwo] = elem;
+    }
+
+    void transformAL (){
+        al = new ArrayList<>();
+        for (int i=0; i<obj.length; i++) {
+            al.add(obj[i]);
+        }
+    }
+
+}
+
+//Фрукты
+package lesson1.taskFruit;
+
+public class Box <T extends Fruit> {
+    private T fruit;
+    //private ArrayList<T> fruits;
+    private double quantity; //количество
+
+    Box (T fruit, int quantity) {
+        this.fruit = fruit;
+        this.quantity = quantity;
+    }
+
+    void addQuiantity (T ft, int quantity) {
+        this.quantity += quantity;
+    }
+
+    double getWeight() {
+        return (fruit.getWeight() * quantity);
+    }
+
+    boolean compareBox (Box bx) {
+
+        //true - равны
+        //false - не равны
+        return (this.getWeight() == bx.getWeight() ? true : false);
+    }
+
+    void shiftFriuts(Box <T> boxIncoming) {
+        if (this.quantity > 0) {
+            boxIncoming.quantity += this.quantity;
+            this.quantity = 0;
+        }
+    }
+}
+
+
+package lesson1.taskFruit;
+
+public class Apple extends Fruit {
+
+    Apple(String sort) {
+        super(sort, 1);
+    }
+}
+
+package lesson1.taskFruit;
+
+public class Orange extends Fruit {
+
+    Orange (String sort) {
+        super(sort, 1.5);
+    }
+}
+
+package lesson1.taskFruit;
+
+public class Box <T extends Fruit> {
+    private T fruit;
+    //private ArrayList<T> fruits;
+    private double quantity; //количество
+
+    Box (T fruit, int quantity) {
+        this.fruit = fruit;
+        this.quantity = quantity;
+    }
+
+    void addQuiantity (T ft, int quantity) {
+        this.quantity += quantity;
+    }
+
+    double getWeight() {
+        return (fruit.getWeight() * quantity);
+    }
+
+    boolean compareBox (Box bx) {
+
+        //true - равны
+        //false - не равны
+        return (this.getWeight() == bx.getWeight() ? true : false);
+    }
+
+    void shiftFriuts(Box <T> boxIncoming) {
+        if (this.quantity > 0) {
+            boxIncoming.quantity += this.quantity;
+            this.quantity = 0;
+        }
+    }
+}
+
+package lesson1.taskFruit;
+
+public class MainClassBox {
+
+    public static void main (String[] args ){
+        Apple apple = new Apple("1");
+        Orange orange = new Orange("2");
+
+        Box<Apple> boxApple = new Box<>(apple, 30);
+        Box<Orange> boxOrange = new Box<>(orange, 20);
+
+        Box<Apple> boxApple2 = new Box<>(apple, 10);
+        System.out.println(boxApple2.getWeight());
+        boxApple.shiftFriuts(boxApple2);
+        System.out.println(boxApple2.getWeight());
+
+        boxApple.addQuiantity(apple,5);
+        System.out.println(boxApple.getWeight());
+
+        System.out.println(boxOrange.compareBox(boxApple));
+    }
+}
+
+
+

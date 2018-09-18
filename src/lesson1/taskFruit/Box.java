@@ -1,7 +1,5 @@
 package lesson1.taskFruit;
 
-import java.util.ArrayList;
-
 public class Box <T extends Fruit> {
     private T fruit;
     //private ArrayList<T> fruits;

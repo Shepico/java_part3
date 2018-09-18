@@ -1,7 +1,6 @@
 package lesson1;
 
 import java.util.ArrayList;
-import java.util.List;
 
  class ArrayElement <T> {
     private T[] obj;
@@ -19,13 +18,13 @@ import java.util.List;
         this.obj[indexTwo] = elem;
     }
 
-    void print(int elem) {
+    /*void print(int elem) {
         System.out.println(obj[elem]);
     }
 
     void printList(int elem) {
         System.out.println(al.get(elem));
-    }
+    }*/
 
     void transformAL (){
         al = new ArrayList<>();

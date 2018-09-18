@@ -12,34 +12,25 @@ public class Box <T extends Fruit> {
         this.quantity = quantity;
     }
 
-    void addQuiantity (Fruit<?> fruit, int quantity) {
-        /*if (fruit instanceof T) {
-            this.quantity += quantity;
-        }else {
-            System.out.println("В данной коробке другие фрукты");
-        }*/
-
+    void addQuiantity (T ft, int quantity) {
+        this.quantity += quantity;
     }
 
     double getWeight() {
         return (fruit.getWeight() * quantity);
     }
 
-    double getQuantity() {
-        return this.quantity;
-    }
+    boolean compareBox (Box bx) {
 
-    boolean compareBox () {
         //true - равны
         //false - не равны
-        return false;
+        return (this.getWeight() == bx.getWeight() ? true : false);
     }
 
-    void shiftFriuts(Box boxIncoming) {
+    void shiftFriuts(Box <T> boxIncoming) {
         if (this.quantity > 0) {
             boxIncoming.quantity += this.quantity;
             this.quantity = 0;
-            this.fruit = null;
         }
     }
 }

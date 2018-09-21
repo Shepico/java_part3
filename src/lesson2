@@ -38,4 +38,23 @@ private void handleNonAuthMsg(ClientThread newClient, String msg) {
         }
 
 /////////// Смена НИКа ////////////
+    synchronized static boolean changeNickname (String login, String password, String newNickname) {
 
+        String request = String.format("select nickname from users where nickname='%s'", newNickname);
+        String requestUpdate = String.format("UPDATE users SET nickname='%s' where login='%s' and password='%s'",newNickname,login,password);
+        // проверка уникальности ника
+        try {
+            ResultSet set = statement.executeQuery(request);
+            set.last();
+            int size = set.getRow();
+
+            if (size != 0) {
+                return false;
+            }
+
+            statement.executeUpdate(requestUpdate);
+            return true;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }

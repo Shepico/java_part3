@@ -1,0 +1,103 @@
+    private BufferedWriter bwFile;
+    private BufferedReader brFile;
+...
+//Это слушатели на фрейм, чтобы можно было записать данные при закрытии. Ну и заодно открытие сделал тут
+    addWindowListener(new WindowListener() { // для работы с файлом
+            @Override
+            public void windowOpened(WindowEvent e) {
+                try {
+                    File file = new File("history.txt");
+                    if (file.exists()) {
+                        brFile = new BufferedReader(new FileReader("history.txt"));
+                        bwFile = new BufferedWriter(new FileWriter("history.txt", true));
+                    } else {
+                        file.createNewFile();
+                        brFile = new BufferedReader(new FileReader("history.txt"));
+                        bwFile = new BufferedWriter(new FileWriter("history.txt"));
+                        //System.out.println("Файл не существует.");
+                    }
+
+                }catch (IOException err) {
+                    putLog (err.getMessage());
+                }
+            }
+
+            @Override
+            public void windowClosing(WindowEvent e) {
+                try {
+                    bwFile.close();
+                }catch (IOException err) {
+                    putLog(err.getMessage());
+                }
+
+            }
+    }
+...
+//Сами процедуры работы
+     //запись в файл
+    private void putFile(String msg) {
+        try {
+            bwFile.write(msg + "\n");
+        }catch (IOException e) {
+            putLog (e.getMessage());
+        }
+    }
+
+    //Вывод из файла
+    private void getFile () {
+        try {
+            ArrayList<String> strArr = new ArrayList<>();
+            String str;
+            while ((str = brFile.readLine()) != null) {
+                strArr.add(str); //грузим все в коллекцию
+            }
+            if (strArr.size()>100) { // больше 100 записей в файле
+                for (int i=strArr.size()-100; i<strArr.size() ;i++) {
+                    putLog(strArr.get(i));
+                }
+           }else { //меньше 100 записей в файле
+                for (int i=0; i<strArr.size() ;i++) {
+                      putLog(strArr.get(i));
+                }
+           }
+
+        }catch (IOException e) {
+            //не чего
+        }
+    }
+
+//Вызов процедур
+ @Override
+    public void onReceiveString(SocketThread thread, Socket socket, String msg) {
+
+        //putLog(msg);
+        String[] arr = msg.split(Messages.DELIMITER);
+        switch (arr[0]){
+            case Messages.AUTH_ACCEPT:{
+                putLog("Вы авторизованы " + arr[1]);
+                getFile();  // вывод из файла
+                break;
+            }
+            case Messages.BROADCAST: {
+                //putLog("От:" + arr[2] + " всем: " + arr[3]);
+                putLog(arr[3]);
+                putFile(arr[3]); //запись в файл
+                //
+                break;
+            }
+/////////////////////////////////////////////////
+            case Messages.AUTH_ERROR: {
+                putLog(String.format("Не верное имя/пароль"));
+                break;
+            }
+            case Messages.USER_LIST: {
+                String users = msg.substring(Messages.USER_LIST.length() + Messages.DELIMITER.length());
+                String[] userArray = users.split(Messages.DELIMITER);
+                Arrays.sort(userArray);
+                userList.setListData(userArray);
+                break;
+            }
+
+        }
+
+    }

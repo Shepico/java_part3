@@ -6,7 +6,7 @@ import java.util.Objects;
 
 public class StartClass {
 
-    public static void main (String[] args) {
+    /*public static void main (String[] args) {
         Integer[] arrInt = {1,2,3,4,5};
         String[] arrStr = {"one", "two", "three"};
         ArrayElement<Integer> arr = new ArrayElement<Integer>(arrInt);
@@ -23,6 +23,6 @@ public class StartClass {
 
 
 
-    }
+    }*/
 
 }

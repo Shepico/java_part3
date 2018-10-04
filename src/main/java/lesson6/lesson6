@@ -171,4 +171,40 @@ public class checkArrayTest {
     }
 }
 ///////////////////////////////////////////////////
+//////////////////////////////////////////////////
+/////////////////////////////////////////////////
+public class ChatServer implements ServerSocketThreadListener, SocketThreadListener{
 
+//создал логгер и 2 хендлера
+ ...
+    private static Logger log = Logger.getLogger(ChatServer.class.getName());
+
+    public ChatServer(ChatServerListener listener){
+        Handler myHandlerTxt = null;
+        Handler myHandler = new ConsoleHandler();
+        myHandler.setLevel(Level.INFO);
+        log.addHandler(myHandler);
+        log.setLevel(Level.ALL);
+        try {
+            myHandlerTxt = new FileHandler("log-%g.txt");
+        }catch (IOException e){
+            log.log(Level.SEVERE, "log file not created");
+        }
+        myHandlerTxt.setFormatter(new Formatter() {
+            @Override
+            public String format(LogRecord record) {
+                return ((record.getMessage())+"\n");
+            }
+        });
+        myHandlerTxt.setLevel(Level.ALL);
+        log.addHandler(myHandlerTxt);
+...
+
+//запись
+...
+            log.log(Level.INFO, "Server is not runnng"); //Уйдет и в косоль и в файл
+        }else {
+            log.log(Level.FINE, "Server interrupted"); // только файл
+            server.interrupt();
+        }
+ююю

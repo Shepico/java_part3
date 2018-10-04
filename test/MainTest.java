@@ -36,9 +36,6 @@ public class MainTest {
 
     @Test
     public void testRebuild() {
-        //System.out.println(this.intArr);
-        //System.out.println(this.resultArr);
-        //Arrays.equals(resultArr, MainClass.rebuildArray(intArr));
         Assert.assertEquals(true,Arrays.equals(resultArr, MainClass.rebuildArray(intArr)));
     }
 

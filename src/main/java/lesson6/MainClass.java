@@ -4,8 +4,7 @@ public class MainClass {
     final static int findNumber = 4;
     final static int findNumberOne = 1;
     static int indexFind = 0;
-    static boolean findOne = false;
-    static boolean findTwo = false;
+
 
     public static void main (String[] args) {
         Integer[] intArr = {1,2,3,4,5,6,7,8,9};
@@ -47,6 +46,8 @@ public class MainClass {
 //111 не тру
 //4444144 тру
     public static  boolean checkArray(int[] arr){
+        boolean findOne = false;
+        boolean findTwo = false;
         for (int i=0; i<arr.length; i++) {
             if (arr[i] != findNumber && arr[i] != findNumberOne) {
                 return false;

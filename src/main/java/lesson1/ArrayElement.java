@@ -27,7 +27,7 @@ import java.util.ArrayList;
     }*/
 
     void transformAL (){
-        al = new ArrayList<>();
+        al = new ArrayList<T>();
         for (int i=0; i<obj.length; i++) {
             al.add(obj[i]);
         }

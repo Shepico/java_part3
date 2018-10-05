@@ -6,10 +6,10 @@ public class MainClassBox {
         Apple apple = new Apple("1");
         Orange orange = new Orange("2");
 
-        Box<Apple> boxApple = new Box<>(apple, 30);
-        Box<Orange> boxOrange = new Box<>(orange, 20);
+        Box<Apple> boxApple = new Box<Apple>(apple, 30);
+        Box<Orange> boxOrange = new Box<Orange>(orange, 20);
 
-        Box<Apple> boxApple2 = new Box<>(apple, 10);
+        Box<Apple> boxApple2 = new Box<Apple>(apple, 10);
         System.out.println(boxApple2.getWeight());
         boxApple.shiftFriuts(boxApple2);
         System.out.println(boxApple2.getWeight());

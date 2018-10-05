@@ -1,0 +1,210 @@
+package lesson6;
+
+public class MainClass {
+    final static int findNumber = 4;
+    final static int findNumberOne = 1;
+    static int indexFind = 0;
+
+
+    public static void main (String[] args) {
+        Integer[] intArr = {1,2,3,4,5,6,7,8,9};
+        Integer[] childArray = rebuildArray(intArr);
+        for (int i=0; i<childArray.length; i++) {
+            System.out.print(childArray[i]+",");
+        }
+        System.out.println();
+
+        int[] intArr2 = {1,1,4,1,1,4};
+        System.out.println(checkArray(intArr2));
+
+
+    }
+
+    public static Integer[] rebuildArray(Integer[] parentArray) {
+
+        Integer[] childArray;
+
+        for (int i=0; i<parentArray.length; i++) {
+            if (parentArray[i] == findNumber) {
+                indexFind = i + 1;
+            }
+        }
+
+        if (indexFind == 0) {
+            throw new RuntimeException();
+        }else {
+            childArray = new Integer[parentArray.length - indexFind];
+            for (int i=indexFind, j=0; i<parentArray.length; i++, j++) {
+                childArray[j] = parentArray[i];
+            }
+        }
+
+        return childArray;
+    }
+//11441 тру
+//11451 не тру
+//111 не тру
+//4444144 тру
+    public static  boolean checkArray(int[] arr){
+        boolean findOne = false;
+        boolean findTwo = false;
+        for (int i=0; i<arr.length; i++) {
+            if (arr[i] != findNumber && arr[i] != findNumberOne) {
+                return false;
+            }
+            if (arr[i] == findNumber) {
+                findOne = true;
+            }else if(arr[i] == findNumberOne) {
+                findTwo = true;
+            }
+        }
+        if (findOne && findTwo) {
+            return true;
+        }
+        return false;
+    }
+}
+///////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////
+import lesson6.MainClass;
+import org.junit.Assert;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+
+import java.util.Arrays;
+import java.util.Collection;
+
+@RunWith(Parameterized.class)
+public class MainTest {
+    @Parameterized.Parameters
+    public static Collection<Object[]> data() {
+        return Arrays.asList(new Object[][] {
+               // {new Integer[] {0,1,3,5,6,7},new Integer[] {}},
+                {new Integer[] {0,1,4,5,6,7},new Integer[] {5,6,7}},
+                {new Integer[] {0,4,3,5,4,7},new Integer[] {7}},
+                {new Integer[] {0,1,3,5,6,4},new Integer[] {}},
+                {new Integer[] {4,1,3,5,6,7},new Integer[] {1,3,5,6,7}},
+        });
+
+    }
+
+    private Integer[] intArr;
+    private Integer[] resultArr;
+    /*private Integer[] intExcep = {0,1,3,5,6,7};*/
+
+
+    public MainTest (Integer[] intArr, Integer[] resultArr){
+        this.intArr = new Integer[intArr.length];
+        this.resultArr = new Integer[resultArr.length];
+        this.intArr = intArr;
+        this.resultArr = resultArr;
+
+    }
+
+    @Test
+    public void testRebuild() {
+        Assert.assertEquals(true,Arrays.equals(resultArr, MainClass.rebuildArray(intArr)));
+    }
+
+
+
+    /*@Test(expected = RuntimeException.class)
+    public void testExceptionRebuild() {
+        Assert.assertEquals(true, MainClass.rebuildArray(intExcep));
+    }*/
+
+}
+////////////////////////////////////////////////////
+import lesson6.MainClass;
+import org.junit.Assert;
+import org.junit.Test;
+
+import java.util.Arrays;
+
+public class TestRebuildException {
+
+    private Integer[] intExcep = {0,1,3,5,6,7};
+
+    @Test(expected = RuntimeException.class)
+    public void testExceptionRebuild() {
+        Assert.assertEquals(true, MainClass.rebuildArray(intExcep));
+    }
+}
+///////////////////////////////////////////////////////
+import lesson6.MainClass;
+import org.junit.Assert;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+
+import java.util.Arrays;
+import java.util.Collection;
+
+@RunWith(Parameterized.class)
+public class checkArrayTest {
+    @Parameterized.Parameters
+    public static Collection<Object[]> data() {
+        return Arrays.asList(new Object[][] {
+                // {new Integer[] {0,1,3,5,6,7},new Integer[] {}},
+                {new int [] {1,1,4,1,1,4},true},
+                {new int [] {4,1,4,1,5,4},false},
+                {new int [] {1,1,1,1,1,1},false},
+                {new int [] {4,4,4},false},
+                {new int [] {4,1,4},true},
+        });
+
+    }
+
+    private int[] intArr;
+    private boolean result;
+
+    public checkArrayTest (int[] intArr, boolean result) {
+        this.intArr = intArr;
+        this.result = result;
+    }
+
+
+    @Test
+    public void testCheck() {
+        Assert.assertEquals(result, MainClass.checkArray(intArr));
+    }
+}
+///////////////////////////////////////////////////
+//////////////////////////////////////////////////
+/////////////////////////////////////////////////
+public class ChatServer implements ServerSocketThreadListener, SocketThreadListener{
+
+//создал логгер и 2 хендлера
+ ...
+    private static Logger log = Logger.getLogger(ChatServer.class.getName());
+
+    public ChatServer(ChatServerListener listener){
+        Handler myHandlerTxt = null;
+        Handler myHandler = new ConsoleHandler();
+        myHandler.setLevel(Level.INFO);
+        log.addHandler(myHandler);
+        log.setLevel(Level.ALL);
+        try {
+            myHandlerTxt = new FileHandler("log-%g.txt");
+        }catch (IOException e){
+            log.log(Level.SEVERE, "log file not created");
+        }
+        myHandlerTxt.setFormatter(new Formatter() {
+            @Override
+            public String format(LogRecord record) {
+                return ((record.getMessage())+"\n");
+            }
+        });
+        myHandlerTxt.setLevel(Level.ALL);
+        log.addHandler(myHandlerTxt);
+...
+
+//запись
+...
+            log.log(Level.INFO, "Server is not runnng"); //Уйдет и в косоль и в файл
+        }else {
+            log.log(Level.FINE, "Server interrupted"); // только файл
+            server.interrupt();
+        }
+ююю
